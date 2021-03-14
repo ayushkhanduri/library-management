@@ -38,7 +38,7 @@ export class ExpressAPIServer extends AbstractAPIServer {
         this.app.use(express.json());
     }
 
-    healthCheck() {
+    healthCheck(): void {
         this.app.get('/api/health/check', (req, res) => {
             res.json( {
                 status: 200
@@ -46,7 +46,7 @@ export class ExpressAPIServer extends AbstractAPIServer {
         });
     }
 
-    setupRoutes(database: AbstractDatabase) {
+    setupAppRoutes(database: AbstractDatabase): void {
         this.expressRouter = new ExpressRouter(database,this.app);
         this.expressRouter.setupRoutes();
     }

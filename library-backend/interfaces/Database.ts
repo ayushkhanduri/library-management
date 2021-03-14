@@ -13,6 +13,6 @@ export abstract class AbstractDatabase {
         this.dbName = null;
     }
 
-    public abstract findById<T>(entity: string, id: string): Promise<T>;
+    public abstract findByParams<T>(entity: string, id: string, params: any): Promise<T>;
     public abstract findAll<T>(entity: string): Promise<T>;
 }

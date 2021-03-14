@@ -15,9 +15,9 @@ export class BookService extends CrudAbstract {
 
     }
 
-    public async findById<T>(id: string): Promise<T | Exception> {
+    public async findByParams<T>(id: string, params: any): Promise<T | Exception> {
         try {
-            const result = await this.database.findById<T>(this.entity, id);
+            const result = await this.database.findByParams<T>(this.entity, id, params);
             return Promise.resolve(result);
         } catch (e) {
             const exception = new Exception(`Error finding book with id ${id}`, "Service");

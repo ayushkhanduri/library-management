@@ -16,7 +16,7 @@ export abstract class AbstractRouter {
         this.bookController = new BookController(bookService);
     }
     
-    public setupRoutes() {
+    public setupRoutes(): void {
         ROUTES.VERSIONS.forEach((version) => {
             this.setupBookRoutes(version, ROUTES.BOOK);
         });

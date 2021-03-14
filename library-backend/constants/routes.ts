@@ -20,7 +20,7 @@ export const ROUTES: IROUTES = {
     BASENAME: '/api',
     BOOK: {
         CREATE: '/book',
-        READ: '/book/:id',
+        READ: '/book/:name',
         UPDATE: '/book',
         DELETE: '/book',
         FINDALL: '/books/all'

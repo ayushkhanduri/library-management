@@ -10,7 +10,7 @@ const DB_LOCATION = "../store/" + process.env.DATABASE;
         const lowDb = new LowDB(DB_LOCATION);
         await AppConfig.initializeServer(expressServer);
         await AppConfig.initializeDb(lowDb);
-        expressServer.setupRoutes(lowDb);
+        expressServer.setupAppRoutes(lowDb);
     } catch(e) {
         console.log(e);
     }

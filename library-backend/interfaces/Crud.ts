@@ -11,6 +11,6 @@ export abstract class CrudAbstract {
     public abstract create(): void;
     public abstract update(): void;
     public abstract delete(): void;
-    public abstract findById<T>(id: string): Promise<T | Exception>;
+    public abstract findByParams<T>(id: string, params: any): Promise<T | Exception>;
     public abstract findAll<T>(): Promise<T | Exception>;
 }

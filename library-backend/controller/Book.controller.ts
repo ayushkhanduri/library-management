@@ -29,8 +29,12 @@ export class BookController {
     findById = async (req: any ,res: any): Promise<void> => {
         let response = null;
         try {
-            const { params: {id } } = req;
-            const book: Entities.Book = ( await this.bookCrudOperations.findById(`${id}`) as Entities.Book );
+            const { params: { name } } = req;
+            const book: Entities.Book = ( await this.bookCrudOperations.findByParams(`${name}`, {
+                title: `${name}`,
+                author: `${name}`,
+                description: `${name}`
+            }) as Entities.Book );
             if (!book) {
                 response = new ReqResponse<Entities.Book>(null,STATUS.NOT_FOUND.CODE,STATUS.NOT_FOUND.MESSAGE);
             } else {

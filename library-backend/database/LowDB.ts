@@ -1,7 +1,7 @@
 import { AbstractDatabase } from "../interfaces/Database";
 import * as path from 'path';
-import * as low from 'lowdb';
-import * as FileAsync from 'lowdb/adapters/FileAsync';
+import low from 'lowdb';
+import FileAsync from 'lowdb/adapters/FileAsync';
 import { Schema } from "../@types/schema";
 
 export class LowDB extends AbstractDatabase {
@@ -36,9 +36,14 @@ export class LowDB extends AbstractDatabase {
         }    
     }
 
-    public async findById<T>(entity: string, id: string): Promise<T> {
+    public async findByParams<T>(entity: string, name: string, params: any): Promise<T> {
         try {
-            const response: T = await (this.connectionInstance.get(entity) as any).find({isbn: id}).value();
+            const response: T = await (this.connectionInstance.get(entity) as any).filter((item: any) =>{
+                return !!Object.keys(params).some((key:string) => {
+                    console.log(key);
+                    return item[key].toLowerCase().includes(name.toLowerCase())
+                 } );
+            }).value();
             return Promise.resolve(response);
         } catch (e) {
             return Promise.reject(e);

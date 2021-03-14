@@ -8,6 +8,6 @@ export abstract class AbstractAPIServer {
         this.portNo = +( process.env.PORT || 3000 );
     }
     public abstract serve(): Promise<boolean>;
-    public abstract setupRoutes(database: AbstractDatabase);
-    protected abstract healthCheck();
+    public abstract setupAppRoutes(database: AbstractDatabase): void;
+    protected abstract healthCheck(): void;
 }

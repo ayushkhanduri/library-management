@@ -7,7 +7,6 @@ declare namespace Entities {
         published: string;
         publisher: string;
         pages: number;
-        tags: Array<string>;
         description: string;
         website: string
     }
