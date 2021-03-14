@@ -16,3 +16,7 @@ export interface BookReduxState {
     list: Array<Book>,
     selectedBook: Book
 }
+
+export interface SearchBookResponse extends ApiResponseType.Response<Array<Book>> {
+
+}

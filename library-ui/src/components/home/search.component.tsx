@@ -2,9 +2,18 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { InputUI } from '../../presentational';
 import { debounce } from '../../shared/utils';
 
-export const SearchComponent = () => {
+
+interface IProps {
+    onApiCall: (text: string) => void;
+} 
+export const SearchComponent: React.FC<IProps> = ({
+    onApiCall
+}) => {
     const [searchText, setSearchText] = useState('');
-    const searchBookByText = useCallback( ([text]) => {
+
+
+    const searchBookByText = useCallback( async ([text]) => {
+        onApiCall(text);
     }, [searchText]);
 
     const searchDebounced = useMemo(() =>{
