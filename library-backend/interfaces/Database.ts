@@ -14,4 +14,5 @@ export abstract class AbstractDatabase {
     }
 
     public abstract findById<T>(entity: string, id: string): Promise<T>;
+    public abstract findAll<T>(entity: string): Promise<T>;
 }

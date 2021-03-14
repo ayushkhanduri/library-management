@@ -1,11 +1,12 @@
 import { AbstractDatabase } from "../interfaces/Database";
 import * as path from 'path';
 import * as low from 'lowdb';
-import * as FileAsync from 'lowdb/adapters/FileSync';
+import * as FileAsync from 'lowdb/adapters/FileAsync';
+import { Schema } from "../@types/schema";
 
 export class LowDB extends AbstractDatabase {
 
-    connectionInstance: any = null;
+    connectionInstance: low.LowdbAsync<Schema.DB> = null;
 
     constructor(fileName: string) {
         super();
@@ -16,7 +17,7 @@ export class LowDB extends AbstractDatabase {
     public async connect() {
         try {
             const dbPath = path.resolve(`${__dirname}/${this.dbName}`);
-            const adapter = new FileAsync(dbPath);
+            const adapter = new FileAsync<Schema.DB>(dbPath);
             this.connectionInstance = await low(adapter);
             return Promise.resolve(this.connectionInstance);
         } catch(e) {
@@ -37,12 +38,19 @@ export class LowDB extends AbstractDatabase {
 
     public async findById<T>(entity: string, id: string): Promise<T> {
         try {
-            const response: T = await this.connectionInstance.get(entity).find({isbn: id}).value();
+            const response: T = await (this.connectionInstance.get(entity) as any).find({isbn: id}).value();
             return Promise.resolve(response);
         } catch (e) {
             return Promise.reject(e);
         }
-        
     }
     
+    public async findAll<T>(entity:string): Promise<T> {
+        try {
+            const response: T = await this.connectionInstance.get(entity).value();
+            return Promise.resolve(response);
+        } catch(e) {
+            return Promise.reject(e);
+        }
+    }
 }

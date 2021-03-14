@@ -24,8 +24,13 @@ export class BookService extends CrudAbstract {
         
     }
 
-    public findAll() {
-
+    public async findAll() {
+        try {
+            const result = await this.database.findAll<Array<Entities.Book>>(this.entity);
+            return Promise.resolve(result);
+        } catch (e) {
+            return Promise.reject(e);
+        }
     }
 
     public update() {

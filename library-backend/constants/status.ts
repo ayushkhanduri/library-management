@@ -6,5 +6,9 @@ export const STATUS = {
     ERROR: {
         CODE: 500,
         MESSAGE: "Internal server error"
+    },
+    NOT_FOUND: {
+        CODE: 400, 
+        MESSAGE: "Entity not found"
     }
 }

@@ -12,10 +12,11 @@ export class ExpressRouter extends AbstractRouter {
         super(database);
         this.application = app;
     }
-    
+
     protected setupBookRoutes(version: string, bookRoutes: IBookRoutes): void {
         const router = Router();
         router.get(`${bookRoutes.READ}`, this.bookController.findById);
+        router.get(`${bookRoutes.FINDALL}`, this.bookController.findAll);
         this.application.use(`${AbstractRouter.BASE_ROUTE}${version}`, router);
     }
 }
