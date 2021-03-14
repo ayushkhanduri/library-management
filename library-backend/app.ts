@@ -3,6 +3,7 @@ import { ExpressAPIServer } from './concrete/ExpressAPIServer';
 import { LowDB } from './database/LowDB';
 
 const DB_LOCATION = "../store/" + process.env.DATABASE;
+
 ( async () => {
     try {
         const expressServer = new ExpressAPIServer();

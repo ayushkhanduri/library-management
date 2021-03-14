@@ -1,4 +1,4 @@
-declare module 'Entities' {
+declare namespace Entities {
     export interface Book {
         isbn: string;
         title: string;
@@ -12,3 +12,5 @@ declare module 'Entities' {
         website: string
     }
 }
+
+export = Entities;

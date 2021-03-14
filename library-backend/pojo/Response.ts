@@ -1,4 +1,4 @@
-export class Response<Data> {
+export class ReqResponse<Data> {
     data: Data;
     status: Status
     constructor(data: Data, statusCode: number, statusMessage: string) {

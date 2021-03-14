@@ -1,4 +1,7 @@
+import * as Entities from "../@types/entities";
+import { STATUS } from "../constants/status";
 import { CrudAbstract } from "../interfaces/Crud";
+import { ReqResponse } from "../pojo/Response";
 
 export class BookController {
     private bookCrudOperations: CrudAbstract;
@@ -15,13 +18,20 @@ export class BookController {
         }
     }
     
-    findById(req,res) {
+    findById = async (req ,res) => {
+        let response = null;
         try {
-            console.log(req);
-            const response = this.bookCrudOperations.findById("9781593275846");
-            console.log(response);
+            const { params: {id } } = req;
+            const book: Entities.Book = await this.bookCrudOperations.findById(`${id}`);
+            response = new ReqResponse<Entities.Book>(book,STATUS.SUCCESS.CODE,STATUS.SUCCESS.MESSAGE);
+            res.json({
+                ...response
+            })
         } catch (e) {
-
+            response = new ReqResponse<Entities.Book>(null,STATUS.ERROR.CODE,STATUS.ERROR.MESSAGE);
+            res.json({
+                ...response
+            })
         }
     }
 }

@@ -1,4 +1,4 @@
-import * as Entity from 'Entities';
+import * as Entities from "../@types/entities";
 import { CrudAbstract } from "../interfaces/Crud";
 import { AbstractDatabase } from "../interfaces/Database";
 
@@ -7,22 +7,28 @@ export class BookService extends CrudAbstract {
         super(entity, database);
     }
 
-    create() {
+    public create() {
     }
 
-    delete() {
-
-    }
-
-    findById(id: string) {
-        this.database.findById<Entity.Book>(this.entity, id);
-    }
-
-    findAll() {
+    public delete() {
 
     }
 
-    update() {
+    public async findById(id: string) {
+        try {
+            const result = await this.database.findById<Entities.Book>(this.entity, id);
+            return Promise.resolve(result);
+        } catch (e) {
+            return Promise.reject(e);
+        }
+        
+    }
+
+    public findAll() {
+
+    }
+
+    public update() {
         
     }
 }

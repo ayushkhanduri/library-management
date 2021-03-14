@@ -27,7 +27,7 @@ export class AppConfig {
 
     static async initializeDb(database: AbstractDatabase) {
         try {
-            database.connect();
+            await database.connect();
             return Promise.resolve(true);
         } catch (e) {
             return Promise.reject(false);

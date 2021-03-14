@@ -5,7 +5,7 @@ import { ExpressRouter } from './ExpressRouter';
 
 export class ExpressAPIServer extends AbstractAPIServer {
 
-    app = express();
+    app: express.Application = express();
     // tightly coupled because express router can only be used with Express server
     expressRouter: ExpressRouter = null;
 
@@ -27,10 +27,15 @@ export class ExpressAPIServer extends AbstractAPIServer {
         try {
             await this.connectToServerAsync();
             this.healthCheck();
+            this.applyMiddleWares();
             return Promise.resolve(true);
         } catch (e) {
             return Promise.reject(false);
         }
+    }
+
+    private applyMiddleWares () {
+        this.app.use(express.json());
     }
 
     healthCheck() {
@@ -42,8 +47,8 @@ export class ExpressAPIServer extends AbstractAPIServer {
     }
 
     setupRoutes(database: AbstractDatabase) {
-        this.expressRouter = new ExpressRouter(database);
-        this.expressRouter.setupRoutes(database);
+        this.expressRouter = new ExpressRouter(database,this.app);
+        this.expressRouter.setupRoutes();
     }
 
 }
