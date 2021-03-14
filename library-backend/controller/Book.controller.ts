@@ -10,10 +10,10 @@ export class BookController {
         this.bookCrudOperations = bookCrudService;
     }
 
-    findAll = async (req, res) => {
+    findAll = async (_: any, res: any): Promise<void> => {
         let response = null;
         try {
-            let books: Array<Entities.Book> = await this.bookCrudOperations.findAll();
+            let books: Array<Entities.Book> = ( await this.bookCrudOperations.findAll() as Array<Entities.Book> );
             response = new ReqResponse<Array<Entities.Book>>(books,STATUS.SUCCESS.CODE,STATUS.SUCCESS.MESSAGE);
             res.json({
                 ...response
@@ -26,11 +26,11 @@ export class BookController {
         }
     }
     
-    findById = async (req ,res) => {
+    findById = async (req: any ,res: any): Promise<void> => {
         let response = null;
         try {
             const { params: {id } } = req;
-            const book: Entities.Book = await this.bookCrudOperations.findById(`${id}`);
+            const book: Entities.Book = ( await this.bookCrudOperations.findById(`${id}`) as Entities.Book );
             if (!book) {
                 response = new ReqResponse<Entities.Book>(null,STATUS.NOT_FOUND.CODE,STATUS.NOT_FOUND.MESSAGE);
             } else {

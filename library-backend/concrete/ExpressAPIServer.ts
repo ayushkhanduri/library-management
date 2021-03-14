@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import { AbstractAPIServer } from "../interfaces/APIServer";
 import { AbstractDatabase } from '../interfaces/Database';
 import { ExpressRouter } from './ExpressRouter';
