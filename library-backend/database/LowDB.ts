@@ -4,6 +4,8 @@ const FileAsync = require('lowdb/adapters/FileAsync');
 
 export class LowDB extends AbstractDatabase {
 
+    connectionInstance: any = null;
+
     constructor(fileName: string) {
         super();
         this.dbName = fileName;
@@ -12,21 +14,27 @@ export class LowDB extends AbstractDatabase {
 
     public async connect() {
         try {
-            const adapter: low.AdapterAsync = new FileAsync(this.dbName);
-            const connectionInstance = await low(adapter);
-            return Promise.resolve(connectionInstance);
+            const adapter = new FileAsync(this.dbName);
+            this.connectionInstance = await low(adapter);
+            return Promise.resolve(this.connectionInstance);
         } catch(e) {
             Promise.reject(false);
         }
     }
 
-    public async disconnect() {
+
+    public async disconnect(): Promise<boolean> {
         try {
             this.flushAll();
             return Promise.resolve(true);
         } catch (e) {
             return Promise.reject(false);
-        }
-        
+        }    
     }
+
+    public findById<T>(entity: string, id: string): T {
+        const response: T = this.connectionInstance.get(entity).find({isbn: id});
+        return response;
+    }
+    
 }

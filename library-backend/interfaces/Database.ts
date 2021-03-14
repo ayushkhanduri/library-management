@@ -12,4 +12,6 @@ export abstract class AbstractDatabase {
         this.port = null;
         this.dbName = null;
     }
+
+    public abstract findById<T>(entity: string, id: string): T;
 }

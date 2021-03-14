@@ -9,7 +9,17 @@ export class BookController {
 
     findAll() {
         try {
-            const response = this.bookCrudOperations.findById();
+            const response = this.bookCrudOperations.findAll();
+        } catch (e) {
+
+        }
+    }
+    
+    findById(req,res) {
+        try {
+            console.log(req);
+            const response = this.bookCrudOperations.findById("9781593275846");
+            console.log(response);
         } catch (e) {
 
         }
