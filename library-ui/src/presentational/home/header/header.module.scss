@@ -1,0 +1,23 @@
+.header {
+    background-color: #FFFFFF;
+    border-bottom: solid 1px #E3E3E3;
+    color: #525257;
+    display: flex;
+    justify-content: space-between;
+    .heading {
+        padding: 20px 0px 0px 10px;
+    }
+    .nav_options {
+        display: flex;
+        margin: 0px;
+        li {
+            list-style: none;
+            cursor: pointer;
+            padding: 20px 10px;
+            a, a:visited, a:link {
+                text-decoration: none;
+                color:#525257;
+            }
+        }
+    }
+}
