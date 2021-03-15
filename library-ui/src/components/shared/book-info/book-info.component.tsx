@@ -19,7 +19,6 @@ const BookInfoComponent: React.FC<BookInfoProps> = (
         book, setSelectedBook, history
     }
 ) => {
-    console.log(history);
     const onCardClicked = useCallback((selectedBook: BookType.Book) => {
         setSelectedBook(selectedBook);
         history.push(ROUTE_CONSTANTS.update(selectedBook.isbn));

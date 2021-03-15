@@ -18,8 +18,11 @@ const CreateUpdate: React.FC<IProps> = (
 ) => {
     const { id } = useParams<IParams>();
     return(
-        <div className="create-update">
-            <p>Create</p>
+        <div className="create-update" style={{
+            maxWidth: "550px",
+            margin: "0 auto"
+        }}>
+            <h3 style={{textAlign: "center"}}> { !id ? "Add a book" : "Update" }</h3>
             <FormComponent history={history} selectedBook={selectedBook} paramsId={id}/>
         </div>
     )

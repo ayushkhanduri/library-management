@@ -6,12 +6,13 @@ interface IProps {
     onClick?: (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
     text: string,
     className?: string
+    disabled?: boolean
 }
 export const ButtonUI: React.FC<IProps> = (
     {
-        type, onClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {}, text, className
+        type, onClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {}, text, className = "", disabled = false
     }
 ) => (
 
-        <input className={`${ styles.custom_button } ${className}`} type={type} value={text} onClick={onClick}/>
+        <input disabled={disabled} className={`${ styles.custom_button } ${disabled} ${className}`} type={type} value={text} onClick={onClick}/>
 );

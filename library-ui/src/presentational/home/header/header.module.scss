@@ -5,7 +5,7 @@
     display: flex;
     justify-content: space-between;
     .heading {
-        padding: 20px 0px 0px 10px;
+        padding: 20px;
         a, a:visited, a:link {
             text-decoration: none;
             color:#525257;
@@ -13,7 +13,7 @@
     }
     .nav_options {
         display: flex;
-        margin: 0px;
+        margin: 0px 20px 0 0;
         li {
             list-style: none;
             cursor: pointer;

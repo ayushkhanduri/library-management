@@ -6,8 +6,8 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    @media only screen and (min-width: 768px) {
-        width: 48%;
-        margin-right: 10px;
-    }
+}
+
+.form_group {
+    width: 100%;
 }

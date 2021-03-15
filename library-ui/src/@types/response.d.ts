@@ -1,3 +1,5 @@
+import { MapLike } from "typescript";
+
 export as namespace ApiResponseType;
 
 export interface Status {
@@ -7,4 +9,12 @@ export interface Status {
 export interface Response<T> {
     data: T;
     status: Status
+}
+
+interface Pagination {
+    pageNumber: number,
+    isLastPage: boolean
+}
+export interface Metadata<M>  {
+    metaData: M
 }

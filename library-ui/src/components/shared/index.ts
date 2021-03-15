@@ -1,0 +1,1 @@
+export * from './book-info/book-info.component'

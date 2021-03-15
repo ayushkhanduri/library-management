@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect } from 'react';
 import { ButtonUI, InputUI } from '../../../presentational';
 import { useForm, Controller } from 'react-hook-form';
-import styles from './form.module.scss';
 import { HttpServiceInstance } from '../../../shared/http.service';
 import { API_CONSTANTS } from '../../../shared/api.constant';
 import { History } from 'history';
 import { connect } from 'react-redux';
 import { setSelectedBook } from '../../../actions/books.actions';
+import { Validators } from '../../../shared/validators';
+import styles from './form.module.scss';
 
-console.log(styles);
 type IProps = {
     selectedBook?: BookType.Book;
     paramsId?: string,
@@ -28,9 +28,12 @@ const generateDefaultFormValuesFromBook = (selectedBook: BookType.Book) => {
 const Form: React.FC<IProps> = ({
     selectedBook, paramsId, history, setSelectedBook
 }) => {
-    const { control, handleSubmit, reset, } = useForm({
+    const { control, handleSubmit, reset, errors } = useForm({
+        mode: "all",
         defaultValues: generateDefaultFormValuesFromBook(selectedBook)
     });
+
+    console.log(errors);
 
     const getSelectedBook = useCallback(async () => {
         try {
@@ -44,6 +47,7 @@ const Form: React.FC<IProps> = ({
 
     useEffect(() => {
         const obj = generateDefaultFormValuesFromBook(selectedBook);
+        console.log("reset");
         reset(obj);
     }, [selectedBook]);
 
@@ -77,45 +81,45 @@ const Form: React.FC<IProps> = ({
     }, []);
 
     const onSubmit = useCallback((values) => {
+        console.log(values);
         if (paramsId && selectedBook?.isbn) {
             const requestObject = {
                 ...selectedBook,
                 ...values
             };
             updateBook(requestObject);
-        } else {
+        } else  {
             const requestObject = {
                 isbn: null,
                 ...values
             }
             createBook(requestObject);
         }
-
     }, [selectedBook]);
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
                 name="title"
                 control={control}
-                render={({ onChange, value }) =>
-                    <InputUI placeholder={'Enter title'} value={value} onChange={(e) => onChange(e.target.value)} />
+                render={({ onChange, value, name }) =>
+                    <InputUI errorMessage={errors?.title?.message} name={name} placeholder={'Enter title'} value={value} onChange={(e) => onChange(e.target.value)} />
                 }
-                rules={{ required: "Title is required" }}
+                rules={{ required: "Author is required" }}
             />
 
             <Controller
                 name="subtitle"
                 control={control}
-                render={({ onChange, value }) =>
-                    <InputUI placeholder={'Enter subtitle'} value={value} onChange={(e) => onChange(e.target.value)} />
+                render={({ onChange, value, name }) =>
+                    <InputUI name={name} placeholder={'Enter subtitle'} value={value} onChange={(e) => onChange(e.target.value)} />
                 }
             />
 
             <Controller
                 name="author"
                 control={control}
-                render={({ onChange, value }) =>
-                    <InputUI placeholder={'Enter author'} value={value} onChange={(e) => onChange(e.target.value)} />
+                render={({ onChange, value, name }) =>
+                    <InputUI name={name} errorMessage={errors?.author?.message} placeholder={'Enter author'} value={value} onChange={(e) => onChange(e.target.value)} />
                 }
                 rules={{
                     required: "Author is required"
@@ -125,28 +129,27 @@ const Form: React.FC<IProps> = ({
             <Controller
                 name="pages"
                 control={control}
-                render={({ onChange, value }) =>
-                    <InputUI placeholder={'Enter number of pages'} value={value} onChange={(e) => onChange(e.target.value)} />
+                render={({ onChange, value, name }) =>
+                    <InputUI name={name} placeholder={'Enter number of pages'} value={value} onChange={(e) => Validators.OnlyNumbers(onChange, e.target.value) } />
                 }
             />
 
             <Controller
                 name="description"
                 control={control}
-                render={({ onChange, value }) =>
-                    <InputUI placeholder={'Enter description'} value={value} onChange={(e) => onChange(e.target.value)} />
+                render={({ onChange, value, name }) =>
+                    <InputUI name={name} errorMessage={errors?.description?.message} placeholder={'Enter description'} value={value} onChange={(e) => onChange(e.target.value)} />
                 }
                 rules={{ required: "Description is required" }}
             />
             <Controller
                 name="website"
                 control={control}
-                render={({ onChange, value }) =>
-                    <InputUI placeholder={'Enter website'} value={value} onChange={(e) => onChange(e.target.value)} />
+                render={({ onChange, value, name }) =>
+                    <InputUI name={name} placeholder={'Enter website'} value={value} onChange={(e) => onChange(e.target.value)} />
                 }
             />
-
-            <ButtonUI className={`${styles.btn_center} ${control.formState.isValid ? '' : styles.disabled}`} text={"submit"} type={'submit'} />
+            <ButtonUI text={"submit"} type={'submit'} />
         </form>
     )
 }

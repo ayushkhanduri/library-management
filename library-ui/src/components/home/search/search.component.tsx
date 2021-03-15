@@ -28,6 +28,6 @@ export const SearchComponent: React.FC<IProps> = ({
 
     
     return (
-        <InputUI placeholder={'Search by name'} onChange={onChange} value={searchText} />
+        <InputUI name="searchText" placeholder={'Search by name'} onChange={onChange} value={searchText} />
     )
 }

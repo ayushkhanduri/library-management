@@ -4,7 +4,8 @@ import { bookReducer as book } from './book.reducer';
 export const initialState: Redux.Store = {
     book: {
         list: [],
-        selectedBook: null
+        selectedBook: null,
+        pagination: null
     }
 }
 

@@ -5,6 +5,6 @@ export const API_CONSTANTS = {
         FIND: (id='') => `/book/${id}`,
         PUT: '/book',
         DELETE: '/book',
-        GET_ALL: '/books/all'
+        GET_ALL_PAGINATION: (page = 0) => `/books/all?page=${page}`
     }
 }

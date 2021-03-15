@@ -4,11 +4,12 @@
     border: 1px #525257 solid;
     color: #fff;
     cursor: pointer;
-    margin: 10px 15px 10px 0px;
+    margin: 0 0px 15px 0px;
     display: block;
     @media only screen and (min-width: 768px) {
         width: 30.5%;
         display: inline-block;
+        margin: 10px 15px 10px 0px;
     }
     .card_header {
         background: #525257;

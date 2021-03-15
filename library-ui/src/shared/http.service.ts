@@ -57,6 +57,5 @@ class HttpService {
 }
 
 const BASE_URL = process.env.REACT_APP_END_POINT;
-console.log(process.env);
 
 export const HttpServiceInstance = new HttpService(BASE_URL);
