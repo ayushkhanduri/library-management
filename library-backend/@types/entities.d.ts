@@ -4,7 +4,7 @@ declare namespace Entities {
         title: string;
         subtitle: string;
         author: string,
-        pages: number;
+        pages: string;
         description: string;
         website: string
     }
