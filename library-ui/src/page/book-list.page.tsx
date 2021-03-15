@@ -35,10 +35,13 @@ const BookList: React.FC<IProps> = (
 
     useEffect(() => {
         getAllBookList(pageNumber);
+    }, [ pageNumber ]);
+
+    useEffect(() => {
         return () => {
             resetList();
         }
-    }, [ pageNumber ]);
+    }, [] );
 
     return (
         <div className="book-list">

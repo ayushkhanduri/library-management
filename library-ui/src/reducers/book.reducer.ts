@@ -18,7 +18,7 @@ export const bookReducer = (state = initialState, action: Redux.Action<Array<Boo
         case BOOK_ACTIONS.SET_BOOK_LIST: {
             let list = [];
             const { data, metaData } = (action.payload as BookType.GetBookActionPayload);
-            if ( metaData.pageNumber === 0) {
+            if ( metaData.pageNumber === 1) {
                 list = [ ...data]
             } else {
                 list = [ ...state.list, ...data ];

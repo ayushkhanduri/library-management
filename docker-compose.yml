@@ -1,0 +1,9 @@
+services:
+  library-ui:
+    build: ./library-ui
+    ports:
+      - "3000:3000"
+  library-backend:
+    build: ./library-backend
+    ports:
+      - "5000:5000"
