@@ -36,7 +36,7 @@ export class LowDB extends AbstractDatabase {
         }    
     }
 
-    public async findByParams<T>(entity: string, name: string, params: any): Promise<T> {
+    public async filterByParams<T>(entity: string, name: string, params: any): Promise<T> {
         try {
             const response: T = await (this.connectionInstance.get(entity) as any).filter((item: any) =>{
                 return !!Object.keys(params).some((key:string) => {
@@ -50,9 +50,35 @@ export class LowDB extends AbstractDatabase {
         }
     }
     
+    public async findById<T>(entity: string, params: any): Promise<T> {
+        try {
+            const response: T = await (this.connectionInstance.get(entity) as any).find(params).value();
+            return Promise.resolve(response);
+        } catch(e) {
+            return Promise.reject(e);
+        }
+    }
     public async findAll<T>(entity:string): Promise<T> {
         try {
             const response: T = await this.connectionInstance.get(entity).value();
+            return Promise.resolve(response);
+        } catch(e) {
+            return Promise.reject(e);
+        }
+    }
+
+    public async update<T>(entity: string, searchParams: any, updateParams: any): Promise<T>{
+        try {
+            const response: T = await (this.connectionInstance.get(entity) as any).find(searchParams).assign(updateParams).write();
+            return Promise.resolve(response);
+        } catch (e) {
+            return Promise.reject(e);
+        }
+    }
+
+    public async create<T>(entity: string, body: any): Promise<T> {
+        try {
+            const response: T = await (this.connectionInstance.get(entity) as any).push(body).write();
             return Promise.resolve(response);
         } catch(e) {
             return Promise.reject(e);

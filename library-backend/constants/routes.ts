@@ -8,6 +8,9 @@ interface ICrudRoutes {
 interface IFindAllRoutes {
     FINDALL: string;
 }
+interface IFindById {
+    FIND_BY_ID: string;
+}
 
 
 interface IROUTES {
@@ -20,7 +23,8 @@ export const ROUTES: IROUTES = {
     BASENAME: '/api',
     BOOK: {
         CREATE: '/book',
-        READ: '/book/:name',
+        READ: '/book',
+        FIND_BY_ID: '/book/:id',
         UPDATE: '/book',
         DELETE: '/book',
         FINDALL: '/books/all'
@@ -28,6 +32,6 @@ export const ROUTES: IROUTES = {
     VERSIONS: ['/v1']
 }
 
-export interface IBookRoutes extends ICrudRoutes, IFindAllRoutes {
+export interface IBookRoutes extends ICrudRoutes, IFindAllRoutes, IFindById {
 
 }

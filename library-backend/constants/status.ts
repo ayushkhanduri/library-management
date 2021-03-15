@@ -10,5 +10,13 @@ export const STATUS = {
     NOT_FOUND: {
         CODE: 400, 
         MESSAGE: "Entity not found"
+    },
+    CREATED: {
+        CODE: 201,
+        MESSAGE: "Entity create successfully"
+    },
+    UPDATED: {
+        CODE: 204,
+        MESSAGE: "Entity updated successfully"
     }
 }

@@ -10,7 +10,7 @@ export class ExpressAPIServer extends AbstractAPIServer {
     // tightly coupled because express router can only be used with Express server
     expressRouter: ExpressRouter = null;
 
-    private static WHITELISTED = ['http://localhost:3000'];
+    private static WHITELISTED = ['http://localhost:3000', 'http://localhost:5000'];
     constructor() {
         super();
     }
@@ -40,7 +40,7 @@ export class ExpressAPIServer extends AbstractAPIServer {
         this.app.use(cors({
             origin: (origin: string, callback ) => {
                 console.log(origin);
-                if( ExpressAPIServer.WHITELISTED.indexOf(origin)!== -1 ) {
+                if( origin === undefined || ExpressAPIServer.WHITELISTED.indexOf(origin)!== -1 ) {
                     callback(null, true);
                 } else {
                     callback(new Error('Not allowed by CORS'));

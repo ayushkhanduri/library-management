@@ -8,9 +8,11 @@ export abstract class CrudAbstract {
         this.entity = entityName;
         this.database = database;
     }
-    public abstract create(): void;
-    public abstract update(): void;
+    public abstract create<T>(body: any): Promise<T | Exception>;
+    public abstract update<T>(searchParams: any, updateParams: any): Promise<T | Exception>;
     public abstract delete(): void;
+    public abstract findById<T>(id: string): Promise<T | Exception>;
     public abstract findByParams<T>(id: string, params: any): Promise<T | Exception>;
     public abstract findAll<T>(): Promise<T | Exception>;
+    
 }

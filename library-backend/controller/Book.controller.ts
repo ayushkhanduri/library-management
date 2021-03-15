@@ -13,38 +13,93 @@ export class BookController {
     findAll = async (_: any, res: any): Promise<void> => {
         let response = null;
         try {
-            let books: Array<Entities.Book> = ( await this.bookCrudOperations.findAll() as Array<Entities.Book> );
-            response = new ReqResponse<Array<Entities.Book>>(books,STATUS.SUCCESS.CODE,STATUS.SUCCESS.MESSAGE);
+            let books: Array<Entities.Book> = (await this.bookCrudOperations.findAll() as Array<Entities.Book>);
+            response = new ReqResponse<Array<Entities.Book>>(books, STATUS.SUCCESS.CODE, STATUS.SUCCESS.MESSAGE);
             res.json({
                 ...response
             })
         } catch (e) {
-            response = new ReqResponse<Entities.Book>(null,STATUS.ERROR.CODE,STATUS.ERROR.MESSAGE);
+            response = new ReqResponse<Entities.Book>(null, STATUS.ERROR.CODE, STATUS.ERROR.MESSAGE);
             res.json({
                 ...response
             })
         }
     }
-    
-    findById = async (req: any ,res: any): Promise<void> => {
+
+    filterByName = async (req: any, res: any): Promise<void> => {
         let response = null;
         try {
-            const { params: { name } } = req;
-            const book: Entities.Book = ( await this.bookCrudOperations.findByParams(`${name}`, {
+            const { query: { name } } = req;
+            const book: Array<Entities.Book> = (await this.bookCrudOperations.findByParams<Array<Entities.Book>>(`${name}`, {
                 title: `${name}`,
                 author: `${name}`,
                 description: `${name}`
-            }) as Entities.Book );
+            }) as Array<Entities.Book>);
+            response = new ReqResponse<Array<Entities.Book>>(book, STATUS.SUCCESS.CODE, STATUS.SUCCESS.MESSAGE);
+            res.json({
+                ...response
+            });
+        } catch (e) {
+            response = new ReqResponse<Entities.Book>(null, STATUS.ERROR.CODE, STATUS.ERROR.MESSAGE);
+            res.json({
+                ...response
+            })
+        }
+    }
+
+    findById = async (req: any, res: any) => {
+        let response = null;
+        try {
+            const { params: { id } } = req;
+            const book: Entities.Book = (await this.bookCrudOperations.findById<Entities.Book>(id) as Entities.Book);
             if (!book) {
-                response = new ReqResponse<Entities.Book>(null,STATUS.NOT_FOUND.CODE,STATUS.NOT_FOUND.MESSAGE);
+                response = new ReqResponse<Entities.Book>(null, STATUS.NOT_FOUND.CODE, STATUS.NOT_FOUND.MESSAGE);
             } else {
-                response = new ReqResponse<Entities.Book>(book,STATUS.SUCCESS.CODE,STATUS.SUCCESS.MESSAGE);
+                response = new ReqResponse<Entities.Book>(book, STATUS.SUCCESS.CODE, STATUS.SUCCESS.MESSAGE);
             }
             res.json({
                 ...response
             });
         } catch (e) {
-            response = new ReqResponse<Entities.Book>(null,STATUS.ERROR.CODE,STATUS.ERROR.MESSAGE);
+            response = new ReqResponse<Entities.Book>(null, STATUS.ERROR.CODE, STATUS.ERROR.MESSAGE);
+            res.json({
+                ...response
+            })
+        }
+    }
+
+    update = async (req: any, res: any) => {
+        let response = null;
+        try {
+            const { body } = req;
+            const book: Entities.Book = (await this.bookCrudOperations.update<Entities.Book>({
+                isbn: body.isbn
+            }, body) as Entities.Book);
+            response = new ReqResponse<Entities.Book>(null, STATUS.UPDATED.CODE, STATUS.UPDATED.MESSAGE);
+            res.json({
+                ...response
+            });
+        } catch (e) {
+            response = new ReqResponse<Entities.Book>(null, STATUS.ERROR.CODE, STATUS.ERROR.MESSAGE);
+            res.json({
+                ...response
+            })
+        }
+    }
+
+    create = async (req: any, res: any) => {
+        let response = null;
+        try {
+            const { body } = req;
+            const book: Entities.Book = (await this.bookCrudOperations.update<Entities.Book>({
+                isbn: body.isbn
+            }, body) as Entities.Book);
+            response = new ReqResponse<Entities.Book>(book, STATUS.CREATED.CODE, STATUS.CREATED.MESSAGE);
+            res.json({
+                ...response
+            });
+        } catch (e) {
+            response = new ReqResponse<Entities.Book>(null, STATUS.ERROR.CODE, STATUS.ERROR.MESSAGE);
             res.json({
                 ...response
             })
