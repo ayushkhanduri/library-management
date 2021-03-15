@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { AbstractAPIServer } from "../interfaces/APIServer";
 import { AbstractDatabase } from '../interfaces/Database';
 import { ExpressRouter } from './ExpressRouter';
@@ -9,13 +10,13 @@ export class ExpressAPIServer extends AbstractAPIServer {
     // tightly coupled because express router can only be used with Express server
     expressRouter: ExpressRouter = null;
 
+    private static WHITELISTED = ['http://localhost:3000'];
     constructor() {
         super();
     }
 
     private connectToServerAsync = () => {
         return new Promise( (resolve, reject) => {
-            console.log("connectToServerAsync");
             this.app.listen(this.portNo).on('listening',() => {
                 console.log(`Listening to port ${this.portNo}`);
                 resolve(true);
@@ -36,6 +37,16 @@ export class ExpressAPIServer extends AbstractAPIServer {
 
     private applyMiddleWares () {
         this.app.use(express.json());
+        this.app.use(cors({
+            origin: (origin: string, callback ) => {
+                console.log(origin);
+                if( ExpressAPIServer.WHITELISTED.indexOf(origin)!== -1 ) {
+                    callback(null, true);
+                } else {
+                    callback(new Error('Not allowed by CORS'));
+                }
+            }
+        }));
     }
 
     healthCheck(): void {
