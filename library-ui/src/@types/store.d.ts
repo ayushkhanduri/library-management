@@ -1,6 +1,10 @@
 export as namespace Redux;
 
 export interface Store {
-    book: BookType.BookReduxState,
-    search: string
+    book: BookType.BookReduxState
+}
+
+export interface Action<T> {
+    payload: T;
+    type: string;
 }

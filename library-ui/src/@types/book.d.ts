@@ -5,10 +5,7 @@ export interface Book {
     title: string;
     subtitle: string;
     author: string,
-    published: string;
-    publisher: string;
     pages: number;
-    tags: Array<string>;
     description: string;
     website: string
 }

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { InputUI } from '../../presentational';
-import { debounce } from '../../shared/utils';
+import { InputUI } from '../../../presentational';
+import { debounce } from '../../../shared/utils';
 
 
 interface IProps {
