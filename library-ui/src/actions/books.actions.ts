@@ -17,6 +17,13 @@ export const setBookList = (payload: BookType.GetBookActionPayload):Redux.Action
     }
 );
 
+export const resetList = (): Redux.Action<Array<BookType.Book>> => {
+    return {
+        payload: [],
+        type: BOOK_ACTIONS.RESET_LIST
+    }
+}
+
 export const getAllBookList = (pageNumber: number) => async (dispatch: Dispatch<Redux.Action<BookType.GetBookActionPayload>>) => {
     try {
         const response = ( await HttpServiceInstance.get(API_CONSTANTS.BOOK.GET_ALL_PAGINATION(pageNumber)) as BookType.GetBookResponse);

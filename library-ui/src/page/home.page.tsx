@@ -31,7 +31,7 @@ export const HomePage: React.FC<IProps> = (
             <div style={{display: "flex", flexWrap: "wrap"}}>
                 {
                     books.map((book,index) => (
-                        <BookInfoComponentWrapped key={index} book={book} history={history}/>
+                        <BookInfoComponentWrapped key={book.isbn} book={book} history={history}/>
                     ))
                 }
             </div>

@@ -30,6 +30,14 @@ export const bookReducer = (state = initialState, action: Redux.Action<Array<Boo
             }
         }
 
+        case BOOK_ACTIONS.RESET_LIST: {
+            return {
+                ...state,
+                list: action.payload,
+                pagination: initialState.pagination
+            }
+        }
+
         default: {
             return state;
         }

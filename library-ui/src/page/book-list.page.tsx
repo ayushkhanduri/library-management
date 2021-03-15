@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { BookInfoComponentWrapped } from '../components';
 import { History } from 'history';
-import { getAllBookList } from '../actions/books.actions';
+import { getAllBookList, resetList } from '../actions/books.actions';
 import { connect } from 'react-redux';
 import { EqualContainer } from '../presentational';
 import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
@@ -14,6 +14,7 @@ type IMapStateToProps = {
 
 type IMapDispatchToProps = {
     getAllBookList: (num: number) => void;
+    resetList: () => void;
 };
 
 type IProps = {
@@ -22,7 +23,7 @@ type IProps = {
 
 const BookList: React.FC<IProps> = (
     {
-        history, bookList, getAllBookList, pagination
+        history, bookList, getAllBookList, pagination, resetList
     }
 ) => {
     const [pageNumber, setPageNumber] = useState(1);
@@ -33,8 +34,10 @@ const BookList: React.FC<IProps> = (
     useInfiniteScroll( 10, increment, pagination?.isLastPage);
 
     useEffect(() => {
-        console.log("Getting data");
         getAllBookList(pageNumber);
+        return () => {
+            resetList();
+        }
     }, [ pageNumber ]);
 
     return (
@@ -43,7 +46,7 @@ const BookList: React.FC<IProps> = (
             <EqualContainer id="scrollDiv">
                 {
                     bookList.map((book,index) => (
-                        <BookInfoComponentWrapped key={index} book={book} history={history} />
+                        <BookInfoComponentWrapped key={book.isbn} book={book} history={history} />
                     ))
                 }
             </EqualContainer>
@@ -63,7 +66,8 @@ const mapStateToProps = (state: Redux.Store): IMapStateToProps => (
 );
 
 const mapDispatchToProps = {
-    getAllBookList
+    getAllBookList,
+    resetList
 }
 
 
