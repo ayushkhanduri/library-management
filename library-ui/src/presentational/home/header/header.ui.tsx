@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export const HeaderUI = () => (
     <nav className={stylesCss.header}>
         <div className={stylesCss.heading}>
-           Online Library
+           <Link to={'/'}>Online Library</Link>
         </div>
         <ul className={stylesCss.nav_options}>
             <li> <Link to={'/create'}> Add </Link></li>

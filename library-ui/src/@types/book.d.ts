@@ -17,3 +17,7 @@ export interface BookReduxState {
 export interface SearchBookResponse extends ApiResponseType.Response<Array<Book>> {
 
 }
+
+export interface FindBookResponse extends ApiResponseType.Response<Book> {
+    
+}

@@ -4,7 +4,6 @@ import { BookInfoComponentWrapped } from '../components/home/book-info/book-info
 import { API_CONSTANTS } from '../shared/api.constant';
 import { HttpServiceInstance } from '../shared/http.service';
 import { History } from 'history';
-import { ROUTE_CONSTANTS } from '../shared/routes.constant';
 
 type IProps =  {
     history: History 
@@ -16,10 +15,13 @@ export const HomePage: React.FC<IProps> = (
 ) =>{
     const [books, setBooks] = useState<BookType.Book[]>([]);
     const onApiCall = useCallback(async (text: string) => {
-        const url = API_CONSTANTS.BOOK.FIND(text);
-        const response = ( await HttpServiceInstance.get(url) as BookType.SearchBookResponse );
-        setBooks(response.data);
-        
+        const url = API_CONSTANTS.BOOK.SEARCH(text);
+        try {
+            const response = ( await HttpServiceInstance.get(url) as BookType.SearchBookResponse );
+            setBooks(response.data);
+        } catch (e) {
+            console.error(e);
+        }
     }, []);
     return (
         <div className="home-page">

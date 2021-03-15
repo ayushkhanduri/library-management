@@ -9,6 +9,40 @@ class HttpService {
         return this.baseUrl + url
     }
 
+    put = async( url: string, data: any) => {
+        try {
+            const fullUrl = this.getFullUrl(url);
+            const response = await fetch(fullUrl, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'PUT',
+                body: JSON.stringify(data)
+            });
+            const jsonResponse = await response.json();
+            return Promise.resolve(jsonResponse);
+        } catch (e) {
+            return Promise.reject(e);
+        }
+    }
+
+    post = async( url: string, data: any) => {
+        try {
+            const fullUrl = this.getFullUrl(url);
+            const response = await fetch(fullUrl, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify(data)
+            });
+            const jsonResponse = await response.json();
+            return Promise.resolve(jsonResponse);
+        } catch (e) {
+            return Promise.reject(e);
+        }
+    }
+
     get = async (url: string) => {
         try {
             const fullUrl = this.getFullUrl(url);

@@ -1,18 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormComponent } from '../components';
+import { useParams } from 'react-router-dom';
+import { History } from 'history';
 
-type IProps = ReturnType<typeof mapStateToProps>;
+type IProps = {
+    history: History
+} & ReturnType<typeof mapStateToProps>;
 
+type IParams = {
+    id: string
+}
 const CreateUpdate: React.FC<IProps> = (
     {
-        selectedBook
+        selectedBook, history
     }
 ) => {
+    const { id } = useParams<IParams>();
     return(
         <div className="create-update">
             <p>Create</p>
-            <FormComponent selectedBook={selectedBook}/>
+            <FormComponent history={history} selectedBook={selectedBook} paramsId={id}/>
         </div>
     )
 }
