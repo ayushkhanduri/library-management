@@ -8,15 +8,17 @@ import {
     BookListPage,
     HomePage
 } from '../page/';
+import { ROUTE_CONSTANTS } from '../shared/routes.constant';
 
 const HomeContainer = () => {
     return (
         <div>
             <HeaderUI />
             <div className={style.container}>
-                <Route path='/' exact component={HomePage} />
-                <Route path='/create' component={CreateUpdatePage} />
-                <Route path='/list' component={BookListPage}/>
+                <Route path={ROUTE_CONSTANTS.home} exact component={HomePage} />
+                <Route path={ROUTE_CONSTANTS.create} component={CreateUpdatePage} />
+                <Route path={ROUTE_CONSTANTS.update()} component={CreateUpdatePage} />
+                <Route path={ROUTE_CONSTANTS.list} component={BookListPage}/>
             </div>
         </div>
     );

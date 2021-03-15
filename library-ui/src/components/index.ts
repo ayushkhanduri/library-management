@@ -1,1 +1,2 @@
-export * from './home/search/search.component'
+export * from './home';
+export * from './create-update';
