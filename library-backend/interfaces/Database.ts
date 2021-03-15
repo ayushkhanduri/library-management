@@ -17,6 +17,6 @@ export abstract class AbstractDatabase {
     public abstract create<T>(entity: string, body: any): Promise<T>;
     // @TODO : SHOULD BE MOVED TO A DIFFERNT INTERFACE
     public abstract filterByParams<T>(entity: string, id: string, params: any): Promise<T>;
-    public abstract findAll<T>(entity: string): Promise<T>;
+    public abstract findAll<T>(entity: string, start: number, end: number): Promise<T>;
     public abstract findById<T>(entity: string, params: any): Promise<T>;
 }

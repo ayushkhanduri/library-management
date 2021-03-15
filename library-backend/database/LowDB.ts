@@ -40,7 +40,6 @@ export class LowDB extends AbstractDatabase {
         try {
             const response: T = await (this.connectionInstance.get(entity) as any).filter((item: any) =>{
                 return !!Object.keys(params).some((key:string) => {
-                    console.log(key);
                     return item[key].toLowerCase().includes(name.toLowerCase())
                  } );
             }).value();
@@ -58,9 +57,11 @@ export class LowDB extends AbstractDatabase {
             return Promise.reject(e);
         }
     }
-    public async findAll<T>(entity:string): Promise<T> {
+    public async findAll<T>(entity:string, start: number, end: number): Promise<T> {
         try {
-            const response: T = await this.connectionInstance.get(entity).value();
+            console.log(start);
+            console.log(end);
+            const response: T = await (this.connectionInstance.get(entity) as any).slice(start, end).value();
             return Promise.resolve(response);
         } catch(e) {
             return Promise.reject(e);

@@ -1,7 +1,7 @@
 import * as Entities from "../@types/entities";
 import { STATUS } from "../constants/status";
 import { CrudAbstract } from "../interfaces/Crud";
-import { ReqResponse } from "../pojo/Response";
+import { ReqResponse, Pagination } from "../pojo/Response";
 
 export class BookController {
     private bookCrudOperations: CrudAbstract;
@@ -10,11 +10,19 @@ export class BookController {
         this.bookCrudOperations = bookCrudService;
     }
 
-    findAll = async (_: any, res: any): Promise<void> => {
+    findAll = async (req: any, res: any): Promise<void> => {
         let response = null;
         try {
-            let books: Array<Entities.Book> = (await this.bookCrudOperations.findAll() as Array<Entities.Book>);
+            const { query: { page } } = req;
+            let books: Array<Entities.Book> = (await this.bookCrudOperations.findAll(+page) as Array<Entities.Book>);
             response = new ReqResponse<Array<Entities.Book>>(books, STATUS.SUCCESS.CODE, STATUS.SUCCESS.MESSAGE);
+            if (!books.length) {
+                const pagination = new Pagination(+page, true);
+                response = new ReqResponse<Array<Entities.Book>>(books, STATUS.SUCCESS.CODE, STATUS.SUCCESS.MESSAGE, pagination);
+            } else {
+                const pagination = new Pagination(+page, false);
+                response = new ReqResponse<Array<Entities.Book>>(books, STATUS.SUCCESS.CODE, STATUS.SUCCESS.MESSAGE, pagination);
+            }
             res.json({
                 ...response
             })
@@ -91,9 +99,7 @@ export class BookController {
         let response = null;
         try {
             const { body } = req;
-            const book: Entities.Book = (await this.bookCrudOperations.update<Entities.Book>({
-                isbn: body.isbn
-            }, body) as Entities.Book);
+            const book: Entities.Book = (await this.bookCrudOperations.create<Entities.Book>(body) as Entities.Book);
             response = new ReqResponse<Entities.Book>(book, STATUS.CREATED.CODE, STATUS.CREATED.MESSAGE);
             res.json({
                 ...response

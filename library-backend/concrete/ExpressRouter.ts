@@ -20,6 +20,7 @@ export class ExpressRouter extends AbstractRouter {
         router.get(`${bookRoutes.FIND_BY_ID}`, this.bookController.findById);
         router.put(`${bookRoutes.UPDATE}`, this.bookController.update);
         router.post(`${bookRoutes.CREATE}`,this.bookController.create);
+        
         this.application.use(`${AbstractRouter.BASE_ROUTE}${version}`, router);
     }
 }

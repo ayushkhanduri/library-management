@@ -34,9 +34,10 @@ export class BookService extends CrudAbstract {
         }
     }
 
-    public async findAll<T>(): Promise<T | Exception> {
+    public async findAll<T>(page: number): Promise<T | Exception> {
         try {
-            const result = await this.database.findAll<T>(this.entity);
+            const paginationCount = 10;
+            const result = await this.database.findAll<T>(this.entity, paginationCount * (page -1), (paginationCount) * (page));
             return Promise.resolve(result);
         } catch (e) {
             const exception = new Exception("Error finding books", "Service");
@@ -60,7 +61,7 @@ export class BookService extends CrudAbstract {
                 ...body,
                 isbn: uuid()
             }
-            const result = await this.database.create<T>(this.entity, body);
+            const result = await this.database.create<T>(this.entity, newBody);
             return Promise.resolve(result);
         } catch (e) {
             const exception = new Exception("Error finding books", "Service");
