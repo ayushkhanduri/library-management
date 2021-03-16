@@ -17,8 +17,12 @@ export class AppConfig {
                 console.log("errr");
                 AppConfig.RETRY_COUNT++;
                 if (AppConfig.RETRY_COUNT < AppConfig.SERVER_CONNECTION_RETRIES) {
-                    const response: boolean = await this.initializeServer(apiServer);
-                    resolve(response);
+                    try {
+                        const response: boolean = await this.initializeServer(apiServer);
+                        resolve(response);
+                    } catch (e) {
+                        reject(false);
+                    }
                 } else {
                     reject(false);
                 }
