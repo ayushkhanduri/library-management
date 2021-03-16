@@ -6,7 +6,7 @@ export class AppConfig {
     private static RETRY_COUNT = 0;
     private static SERVER_CONNECTION_RETRIES: number = +(process.env.SERVER_RETRIES || 3);
 
-    static initializeServer(apiServer: AbstractAPIServer) {
+    static initializeServer(apiServer: AbstractAPIServer): Promise<boolean> {
         return new Promise(async (resolve, reject) => {
             try {
                 const response = await apiServer.serve();
@@ -17,7 +17,8 @@ export class AppConfig {
                 console.log("errr");
                 AppConfig.RETRY_COUNT++;
                 if (AppConfig.RETRY_COUNT < AppConfig.SERVER_CONNECTION_RETRIES) {
-                    this.initializeServer(apiServer);
+                    const response: boolean = await this.initializeServer(apiServer);
+                    resolve(response);
                 } else {
                     reject(false);
                 }
